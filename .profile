@@ -1,3 +1,3 @@
 echo "Buongiorno Fay!"
-alias ls='ls -G'
+alias ls='ls -aG'
 alias emacs='emacs -nw'
