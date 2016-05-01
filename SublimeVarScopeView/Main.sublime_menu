@@ -1,0 +1,7 @@
+[
+{
+    "id" : "Variables Scope",
+    "caption" : "Enable Variable Scope View",
+    "command" : "var_scope_view"
+}
+]
