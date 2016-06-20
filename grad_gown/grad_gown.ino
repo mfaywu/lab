@@ -4,9 +4,9 @@
 #endif
 
 #define PIN 6
-#define PIX_LENGTH 12
+#define PIX_LENGTH 13
 
-int pix[] = {0, 1, 2, 3, 4, 5, 6, 11, 10, 9, 8, 7};
+int pix[] = {0, 1, 2, 3, 4, 5, 6, 11, 10, 9, 8, 7, 6};
   
 
 // Parameter 1 = number of pixels in strip
@@ -31,27 +31,36 @@ void setup() {
 }
 
 void loop() {
-  // Some example procedures showing how to display to the pixels:
-  colorWipe(strip.Color(255, 0, 0), 50); // Red
-  //colorWipe(strip.Color(0, 255, 0), 50); // Green
-  //colorWipe(strip.Color(0, 0, 255), 50); // Blue
-//colorWipe(strip.Color(0, 0, 0, 255), 50); // White RGBW
-  // Send a theater pixel chase in...
-  //theaterChase(strip.Color(127, 127, 127), 50); // White
-  //theaterChase(strip.Color(127, 0, 0), 50); // Red
-  //theaterChase(strip.Color(0, 0, 127), 50); // Blue
+  uint16_t speed = 300;
+  for (uint16_t i = 0; i < 2; i++) {
+    speed = dots(strip.Color(3, 242, 250), speed); // Light Blue
+    speed = dots(strip.Color(255, 255, 0), speed); // Yellow
+  }
+  colorWipe(strip.Color(3, 242, 250), 50); // Light Blue
+  colorWipe(strip.Color(255, 255, 0), 50); // Yellow
+  colorWipe(strip.Color(3, 242, 250), 50); // Light Blue
+  colorWipe(strip.Color(255, 255, 0), 50); // Yellow
 
-  //rainbow(20);
-  //rainbowCycle(20);
-  //theaterChaseRainbow(50);
+  rainbow(10);
+  rainbowCycle(10);
 }
 
-// Fill the dots one after the other with a color
-void colorWipe(uint32_t c, uint8_t wait) {
+//Blink one pixel at a time
+uint16_t dots(uint32_t c, uint16_t speed) {
   for(uint16_t i=0; i<PIX_LENGTH; i++) {
     strip.setPixelColor(pix[i], c);
     int prev_pin = (i+PIX_LENGTH-1) % PIX_LENGTH;
     strip.setPixelColor(pix[prev_pin], strip.Color(0,0,0));
+    strip.show();
+    delay(speed);
+    speed = speed - 5;
+  }
+  return speed;
+}
+
+void colorWipe(uint32_t c, uint16_t wait) {
+  for(uint16_t i=0; i<PIX_LENGTH; i++) {
+    strip.setPixelColor(pix[i], c);
     strip.show();
     delay(wait);
   }
